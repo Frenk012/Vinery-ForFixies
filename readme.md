@@ -1,5 +1,8 @@
 <p align="center"><img src="https://imgur.com/szd6rGi.png" width="1200"></p>
 
+<h2 align="center">⚠️ Unofficial Fork ⚠️</h2>
+<p align="center"><i>This is an unofficial fork of the original <b>[Let's Do] Vinery</b> mod. All rights and credits belong to the original mod creators.</i></p>
+
 <h1 align="center">Welcome to Vinery!</h1>
 
 <p>Hello there! You must be looking for a cozy extension to add onto your cozy little cottage, no? Well look no further for '[Let's Do] Vinery' offers just that!</p>
@@ -14,6 +17,22 @@
 </p>
 
 <sub>*The elements and mechanics related to wine and alcoholic beverages contained in Vinery are solely for entertainment purposes and should not be interpreted in any way as an endorsement or glorification of alcohol consumption*</sub>
+
+<h1 align="center">Changes in this Fork</h1>
+<p>
+    This fork includes the following modifications and fixes:<br>
+    - Enhanced wine effects system with new data management<br>
+    - Various bug fixes and improvements<br>
+    - Removed natural spawn of trees and bushes<br>
+    - Reworked bushes, now grapes grow back only 2 times<br>
+</p>
+
+<h1 align="center">Credits</h1>
+<p align="center">
+    All rights, assets, and credits belong to the original creators of <b>[Let's Do] Vinery</b>.<br>
+    This fork is maintained for personal use and bug fixing purposes only.
+</p>
+
 <h1 align="center">Available for</h1>
 <p align="center"><img src="https://imgur.com/gREqi3m.png" width="240" height="120"></p>
 
