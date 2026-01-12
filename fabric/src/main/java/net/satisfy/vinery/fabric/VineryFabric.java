@@ -9,8 +9,10 @@ import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.PackType;
 import net.satisfy.vinery.core.Vinery;
 import net.satisfy.vinery.core.registry.CompostableRegistry;
+import net.satisfy.vinery.fabric.data.FabricWineEffectManager;
 import net.satisfy.vinery.fabric.config.VineryFabricConfig;
 import net.satisfy.vinery.fabric.core.registry.VineryFabricVillagers;
 import net.satisfy.vinery.fabric.core.world.VineryBiomeModification;
@@ -28,6 +30,9 @@ public class VineryFabric implements ModInitializer {
         CompostableRegistry.registerCompostable();
         VineryBiomeModification.init();
         Vinery.commonSetup();
+
+        // Register wine effect datapack reload listener
+        ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(new FabricWineEffectManager());
 
         ServerLifecycleEvents.SERVER_STARTED.register(VineryFabricVillagers::init);
 

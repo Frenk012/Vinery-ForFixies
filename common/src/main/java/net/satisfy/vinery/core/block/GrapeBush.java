@@ -38,6 +38,8 @@ import java.util.Iterator;
 @SuppressWarnings("deprecation")
 public class GrapeBush extends BushBlock implements BonemealableBlock {
     public static final IntegerProperty AGE;
+    public static final IntegerProperty HARVESTS = IntegerProperty.create("harvests", 0, 2);
+    public static final int MAX_HARVESTS = 2;
     private static final VoxelShape SHAPE;
 
     public final GrapeType type;
@@ -48,6 +50,11 @@ public class GrapeBush extends BushBlock implements BonemealableBlock {
     public GrapeBush(Properties settings, GrapeType type) {
         super(settings);
         this.type = type;
+        this.registerDefaultState(this.stateDefinition.any().setValue(AGE, 0).setValue(HARVESTS, 0));
+    }
+
+    public boolean isSterile(BlockState state) {
+        return state.getValue(HARVESTS) >= MAX_HARVESTS;
     }
 
     @Override
@@ -69,13 +76,25 @@ public class GrapeBush extends BushBlock implements BonemealableBlock {
     public @NotNull ItemInteractionResult useItemOn(ItemStack stack,BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         int i = state.getValue(AGE);
         boolean bl = i == 3;
+
+        // If sterile, no interaction possible
+        if (isSterile(state)) {
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        }
+
         if (!bl && stack.is(Items.BONE_MEAL)) {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         } else if (i > 1) {
             int x = world.random.nextInt(2);
             popResource(world, pos, new ItemStack(getGrapeType().getItem(), x + (bl ? 1 : 0)));
             world.playSound(null, pos, SoundEvents.SWEET_BERRY_BUSH_PICK_BERRIES, SoundSource.BLOCKS, 1.0F, 0.8F + world.random.nextFloat() * 0.4F);
-            world.setBlock(pos, state.setValue(AGE, 1), 2);
+
+            // Increment harvest count and check if becoming sterile
+            int currentHarvests = state.getValue(HARVESTS);
+            int newHarvests = Math.min(MAX_HARVESTS, currentHarvests + 1);
+            BlockState newState = state.setValue(AGE, 1).setValue(HARVESTS, newHarvests);
+            world.setBlock(pos, newState, 2);
+
             return ItemInteractionResult.sidedSuccess(world.isClientSide);
         } else {
             return super.useItemOn(stack,state, world, pos, player, hand, hit);
@@ -84,6 +103,11 @@ public class GrapeBush extends BushBlock implements BonemealableBlock {
 
     @Override
     public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
+        // Sterile bushes don't grow
+        if (isSterile(state)) {
+            return;
+        }
+
         int age = state.getValue(AGE);
         double growthChance = PlatformHelper.getGrapeGrowthChance();
         if (age < 3 && random.nextDouble() < growthChance && canGrowPlace(world, pos, state)) {
@@ -95,12 +119,14 @@ public class GrapeBush extends BushBlock implements BonemealableBlock {
 
     @Override
     public boolean isRandomlyTicking(BlockState state) {
-        return state.getValue(AGE) < 3;
+        // Sterile bushes don't tick
+        return !isSterile(state) && state.getValue(AGE) < 3;
     }
 
     @Override
     public boolean isValidBonemealTarget(LevelReader levelReader, BlockPos blockPos, BlockState blockState) {
-        return blockState.getValue(AGE) < 3;
+        // Can't bonemeal sterile bushes
+        return !isSterile(blockState) && blockState.getValue(AGE) < 3;
     }
 
     @Override
@@ -119,7 +145,7 @@ public class GrapeBush extends BushBlock implements BonemealableBlock {
 
     @Override
     protected boolean mayPlaceOn(BlockState floor, BlockGetter world, BlockPos pos) {
-        return floor.isSolidRender(world, pos);
+        return floor.is(Blocks.FARMLAND);
     }
 
     public GrapeType grapeType() {
@@ -139,7 +165,7 @@ public class GrapeBush extends BushBlock implements BonemealableBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(AGE);
+        builder.add(AGE, HARVESTS);
     }
 
     static {

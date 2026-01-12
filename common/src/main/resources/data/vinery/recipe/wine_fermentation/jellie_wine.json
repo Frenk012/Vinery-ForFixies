@@ -6,13 +6,13 @@
     },
     "ingredients": [
         {
-            "item": "vinery:apple_wine"
+            "item": "minecraft:slime_ball"
         },
         {
-            "item": "vinery:chenet_wine"
+            "item": "minecraft:golden_apple"
         },
         {
-            "item": "vinery:bolvar_wine"
+            "item": "minecraft:honey_bottle"
         }
     ],
     "wine_bottle": {

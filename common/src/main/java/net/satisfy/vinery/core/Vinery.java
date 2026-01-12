@@ -10,9 +10,12 @@ import net.satisfy.vinery.core.event.EventHandler;
 import net.satisfy.vinery.core.registry.*;
 import net.satisfy.vinery.core.util.WineEffectSetup;
 import net.satisfy.vinery.core.world.feature.VineryFeatures;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Vinery {
     public static final String MOD_ID = "vinery";
+    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
     public static void init() {
         MobEffectRegistry.register();

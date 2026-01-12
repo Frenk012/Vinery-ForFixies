@@ -1,0 +1,6 @@
+{
+    "effect": "minecraft:speed",
+    "duration": 2400,
+    "amplifier": 1,
+    "scale_with_age": true
+}

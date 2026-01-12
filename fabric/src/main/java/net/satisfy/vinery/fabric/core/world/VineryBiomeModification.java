@@ -13,30 +13,7 @@ import java.util.function.Predicate;
 public class VineryBiomeModification {
 
     public static void init() {
-        BiomeModification world = BiomeModifications.create(Vinery.identifier("world_features"));
-        Predicate<BiomeSelectionContext> plainsBiomes = getVinerySelector("spawns_grape");
-        Predicate<BiomeSelectionContext> savannaBiomes = getVinerySelector("spawns_savanna_grape");
-        Predicate<BiomeSelectionContext> taigaBiomes = getVinerySelector("spawns_taiga_grape");
-        Predicate<BiomeSelectionContext> jungleBiomes = getVinerySelector("spawns_jungle_grape");
-
-        Predicate<BiomeSelectionContext> treeBiomes = getVinerySelector("spawns_cherry_tree");
-
-
-        world.add(ModificationPhase.ADDITIONS, plainsBiomes, ctx -> ctx.getGenerationSettings().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VineryPlacedFeatures.RED_GRAPE_PATCH_CHANCE_KEY));
-        world.add(ModificationPhase.ADDITIONS, plainsBiomes, ctx -> ctx.getGenerationSettings().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VineryPlacedFeatures.WHITE_GRAPE_PATCH_CHANCE_KEY));
-        world.add(ModificationPhase.ADDITIONS, savannaBiomes, ctx -> ctx.getGenerationSettings().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VineryPlacedFeatures.SAVANNA_RED_GRAPE_PATCH_CHANCE_KEY));
-        world.add(ModificationPhase.ADDITIONS, savannaBiomes, ctx -> ctx.getGenerationSettings().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VineryPlacedFeatures.SAVANNA_WHITE_GRAPE_PATCH_CHANCE_KEY));
-        world.add(ModificationPhase.ADDITIONS, taigaBiomes, ctx -> ctx.getGenerationSettings().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VineryPlacedFeatures.TAIGA_RED_GRAPE_PATCH_CHANCE_KEY));
-        world.add(ModificationPhase.ADDITIONS, taigaBiomes, ctx -> ctx.getGenerationSettings().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VineryPlacedFeatures.TAIGA_WHITE_GRAPE_PATCH_CHANCE_KEY));
-
-
-
-
-        world.add(ModificationPhase.ADDITIONS, jungleBiomes, ctx -> ctx.getGenerationSettings().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VineryPlacedFeatures.JUNGLE_RED_GRAPE_PATCH_CHANCE_KEY));
-        world.add(ModificationPhase.ADDITIONS, jungleBiomes, ctx -> ctx.getGenerationSettings().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VineryPlacedFeatures.JUNGLE_WHITE_GRAPE_PATCH_CHANCE_KEY));
-
-        world.add(ModificationPhase.ADDITIONS, treeBiomes, ctx -> ctx.getGenerationSettings().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VineryPlacedFeatures.TREE_CHERRY_PLACED_KEY));
-        world.add(ModificationPhase.ADDITIONS, treeBiomes, ctx -> ctx.getGenerationSettings().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VineryPlacedFeatures.TREE_APPLE_PLACED_KEY));
+        // Natural world generation disabled - trees and grape bushes no longer spawn naturally
     }
 
     private static Predicate<BiomeSelectionContext> getVinerySelector(String path) {

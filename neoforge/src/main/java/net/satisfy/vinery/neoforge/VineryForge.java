@@ -8,7 +8,9 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.satisfy.vinery.core.Vinery;
+import net.satisfy.vinery.core.data.WineEffectManager;
 import net.satisfy.vinery.core.registry.CompostableRegistry;
 import net.satisfy.vinery.core.util.PreInit;
 import net.satisfy.vinery.neoforge.core.config.VineryForgeConfig;
@@ -33,6 +35,13 @@ public class VineryForge {
         VineryNeoForgeVillagers.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
+
+        // Register wine effect datapack reload listener
+        NeoForge.EVENT_BUS.addListener(this::onAddReloadListener);
+    }
+
+    private void onAddReloadListener(AddReloadListenerEvent event) {
+        event.addListener(new WineEffectManager());
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

@@ -15,7 +15,8 @@ public class WineYears {
     public static final int MAX_DURATION = net.satisfy.vinery.platform.PlatformHelper.getWineMaxDuration();
 
     public static int getYear(Level world) {
-        return world != null ? YEARS_START + (int) ((world.getGameTime() / 24000L) / DAYS_PER_YEAR) : YEARS_START;
+        int daysPerYear = DAYS_PER_YEAR > 0 ? DAYS_PER_YEAR : 24;
+        return world != null ? YEARS_START + (int) ((world.getGameTime() / 24000L) / daysPerYear) : YEARS_START;
     }
 
     public static int getDays(Level world) {

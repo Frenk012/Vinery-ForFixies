@@ -1,0 +1,6 @@
+{
+    "effect": "minecraft:slow_falling",
+    "duration": 1600,
+    "amplifier": 0,
+    "scale_with_age": true
+}

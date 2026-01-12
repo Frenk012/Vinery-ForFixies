@@ -102,9 +102,15 @@ public class GrapevinePotBlock extends Block {
             }
         }
         if (stack.getItem() instanceof GrapeItem grape) {
-            if (!player.isCreative()) stack.shrink(1);
             final int stage = state.getValue(STAGE);
             final int storage = state.getValue(STORAGE);
+
+            // Check if pot already has a different grape type - reject if mismatched
+            if (stage > 0 && state.getValue(GRAPEVINE_TYPE) != grape.getType()) {
+                return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            }
+
+            if (!player.isCreative()) stack.shrink(1);
             boolean playSound = false;
             if (stage == 0) {
                 world.setBlock(pos, this.defaultBlockState().setValue(STAGE, 1).setValue(STORAGE, 1).setValue(GRAPEVINE_TYPE, grape.getType()), Block.UPDATE_ALL);
